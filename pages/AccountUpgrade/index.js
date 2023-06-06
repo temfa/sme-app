@@ -414,7 +414,7 @@ const AccountUpgrade = () => {
         if (checkStatus !== null) {
             console.log(checkStatus.data);
             if (checkStatus.data.noneDocumentSubmissions.tin === true) {
-                setTinStatus('notDone');
+                setTinStatus('done');
             }
             if (
                 checkStatus.data.noneDocumentSubmissions.addressVerification ===
@@ -470,7 +470,9 @@ const AccountUpgrade = () => {
             if (userProfile?.idDocumentVerificationStatus === 'verified') {
                 setidCardStatus('done');
             }
-
+            if (userProfile?.sentReferenceForms === true) {
+                setRefereeStatus('done');
+            }
             setText(userProfile.customerCategory);
             setCorporateAccount(userProfile.hasRegisteredBusiness);
             setStreetName(userProfile.address);
@@ -569,13 +571,10 @@ const AccountUpgrade = () => {
                     if (document.status === 'REJECTED') {
                         setRefereeStatus('comment');
                     } else if (document.status === 'APPROVED') {
-                        setRefereeStatus('done');
                         setReffereeFormStatus('done');
                     } else if (document.status === 'PENDING') {
-                        setRefereeStatus('notDone');
                         setReffereeFormStatus('notDone');
                     } else {
-                        setRefereeStatus('done');
                         setReffereeFormStatus('done');
                     }
                 } else if (document.documentType === 'IDENTIFICATION') {
@@ -724,7 +723,7 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
-            setScumlStatus('done');
+            setRefereeStatus('done');
         } else if (reffereeError !== null) {
             //console.log(scmulErrorMessages);
             setMessage(reffereeError.data.message);
@@ -2692,7 +2691,7 @@ const AccountUpgrade = () => {
                                 <input
                                     type="text"
                                     value={reffereeEmail}
-                                    placeholder="Input Referee Emai"
+                                    placeholder="Input Referee Email"
                                     onChange={(e) =>
                                         setReffereeEmail(e.target.value)
                                     }
@@ -2706,7 +2705,7 @@ const AccountUpgrade = () => {
                                 <input
                                     type="text"
                                     value={reffereeEmailI}
-                                    placeholder="Input Referee Emai"
+                                    placeholder="Input Referee Email"
                                     onChange={(e) =>
                                         setReffereeEmailI(e.target.value)
                                     }
