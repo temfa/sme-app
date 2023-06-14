@@ -249,9 +249,10 @@ const ExistingMultiStep = () => {
     function handleSubmitNew() {
         router.push({
             pathname: '/Onboarding/ExistingProfileSetup',
-            query: { id: 3 }
+            query: { id: 3, pageType: 'New' }
         });
-        setPageType('New');
+        // setPageType('New');
+        setFormData({ ...formData, type: 'false' });
     }
 
     useEffect(() => {
