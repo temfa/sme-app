@@ -13,7 +13,7 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-.createdQr{
+.createdQr {
     width: 60%;
     overflow: scroll;
     -ms-overflow-style: none; /* IE and Edge */
@@ -22,7 +22,7 @@
 .secondBody::-webkit-scrollbar {
     display: none;
 }
-.paylinkvalidTill{
+.paylinkvalidTill {
     display: flex;
     gap: 30px;
     padding-top: 20px;
@@ -31,24 +31,23 @@
     /* border-bottom: 1px solid #dbdbdb; */
     border-top: 1px solid #dbdbdb;
 }
-.qrData{
+.qrData {
     display: flex;
     align-items: center;
     gap: 30px;
     padding-top: 15px;
     border-top: 1px solid #dbdbdb;
 }
-.qrData div p{
+.qrData div p {
     cursor: pointer;
     font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 15px;
-/* identical to box height */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
 
-
-color: #455A64;
+    color: #455a64;
 }
 .download {
     color: #529b03;
@@ -131,7 +130,7 @@ color: #455A64;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-.validTill{
+.validTill {
     display: flex;
     gap: 30px;
     padding-top: 20px;
@@ -365,4 +364,20 @@ color: #455A64;
     line-height: 22px;
     color: #3e3e3e;
     margin: 32px 0px;
+}
+@media screen and (max-width: 1098px) {
+    .secondBody {
+        width: 93%;
+        max-width: 600px;
+        background-color: white;
+        border-radius: 20px;
+        margin: 32px auto;
+        position: absolute;
+        left: 0%;
+        top: 5%;
+        z-index: 10;
+        position: relative;
+        height: 80vh;
+        overflow: scroll;
+    }
 }

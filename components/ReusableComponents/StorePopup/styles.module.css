@@ -16,13 +16,13 @@
     height: 80vh;
     overflow: scroll;
     width: 100%;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 .innerDiv::-webkit-scrollbar {
     display: none;
-  }
-  
+}
+
 @media screen and (max-width: 500px) {
     .storefrontPopup {
         width: 90%;
@@ -30,7 +30,7 @@
     }
 
     .innerDiv {
-        width: 85%;
+        width: 100%;
         max-width: 100%;
     }
 }

@@ -12,7 +12,7 @@ const cardLoginReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                cardLoginS: [],
+                cardLoginS: null,
                 cardLoginerrorMessages: ''
             };
         case cardLogin.CARDLOGIN_LOAD_SUCCESS:
