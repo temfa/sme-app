@@ -151,6 +151,7 @@ const CorporateAccount = () => {
                 // error.response.data.message
                 // );
                 // setErrorMes(error.response.data.message);
+                console.log(error.response);
                 if (
                     // errorMes ===
                     //     'You already have an account with us. Please contact us for more information' ||
