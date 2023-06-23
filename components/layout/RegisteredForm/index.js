@@ -179,28 +179,27 @@ const ExistingMultiStep = () => {
                     />
                 );
 
-            // case 2:
-            //     return (
-            //         <div className={styles.livenes}>
-            //             <Liveness
-            //                 action={() => {
-            //                     setLoads((prev) => !prev);
-            //                     router.push({
-            //                         pathname:
-            //                             '/Onboarding/ExistingProfileSetup',
-            //                         query: { id: 3 }
-            //                     });
-            //                 }}
-            //                 cookie={cookie}
-            //                 loading={loading}
-            //                 setLoading={setLoading}
-            //                 // action={handleSubmitt}
-            //             />
-            //         </div>
-            //     );
-
-            // case 3:
             case 2:
+                return (
+                    <div className={styles.livenes}>
+                        <Liveness
+                            action={() => {
+                                setLoads((prev) => !prev);
+                                router.push({
+                                    pathname:
+                                        '/Onboarding/ExistingProfileSetup',
+                                    query: { id: 3 }
+                                });
+                            }}
+                            cookie={cookie}
+                            loading={loading}
+                            setLoading={setLoading}
+                            // action={handleSubmitt}
+                        />
+                    </div>
+                );
+
+            case 3:
                 return (
                     <StepThree
                         action={() => {
@@ -216,8 +215,7 @@ const ExistingMultiStep = () => {
                         mainAccount={newAccounts}
                     />
                 );
-            // case 4:
-            case 3:
+            case 4:
                 return (
                     <StepFour
                         title={pageType}
@@ -242,16 +240,15 @@ const ExistingMultiStep = () => {
         // setLoads((prev) => !prev);
         router.push({
             pathname: '/Onboarding/ExistingProfileSetup',
-            query: { id: 3 }
+            query: { id: 4 }
         });
         setFormData({ ...formData, type: 'true' });
     }
     function handleSubmitNew() {
         router.push({
             pathname: '/Onboarding/ExistingProfileSetup',
-            query: { id: 3, pageType: 'New' }
+            query: { id: 4, pageType: 'New' }
         });
-        // setPageType('New');
         setFormData({ ...formData, type: 'false' });
     }
 
@@ -276,8 +273,7 @@ const ExistingMultiStep = () => {
                 } else if (loginWith === null) {
                     router.push({
                         pathname: '/Onboarding/ExistingProfileSetup',
-                        // query: { id: 3 }
-                        query: { id: 2 }
+                        query: { id: 3 }
                     });
                     setFormData({ ...formData, type: 'true' });
                 }
