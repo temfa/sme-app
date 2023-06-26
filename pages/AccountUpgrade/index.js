@@ -118,6 +118,7 @@ const AccountUpgrade = () => {
     const [rejected, setRejected] = useState('Rejected');
     const [status, setStatus] = useState('Done');
     const [verifyStatus, setVerifyStatus] = useState('');
+    const [verifyComment, setVerifyComment] = useState('');
     const [transactionPinStatus, setTransactionPinStatus] = useState('');
     const [reffereeEmailI, setReffereeEmailI] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -1022,7 +1023,6 @@ const AccountUpgrade = () => {
                 addressVerificationSuc.data.data.verificationStatus ===
                 'SUCCESS'
             ) {
-                setVerifyStatus('Done');
                 setMessage('Address Verification Successful');
                 setStatusbar('success');
                 // setOutcome(true);
@@ -1037,6 +1037,11 @@ const AccountUpgrade = () => {
                 // setStatusbar('error');
                 setOutcome(false);
                 setLoading(false);
+            } else if (
+                addressVerificationSuc.data.data.verificationStatus === 'FAILED'
+            ) {
+                setVerifyStatus('comment');
+                setVerifyComment('Try Again');
             }
         }
     }, [addressVerificationSuc, addressVerificationsError]);
@@ -1130,11 +1135,14 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
                 name: 'Verify',
-                comment: null,
+                comment: verifyComment,
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
                         ? 'Done'
+                        : addressVerificationSuc?.data.data
+                              .verificationStatus === 'FAILED'
+                        ? 'Failed'
                         : pending
             },
             {
@@ -1270,8 +1278,15 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
                 name: 'Verify',
-                comment: null,
-                status: verifyStatus === true ? 'Done' : pending
+                comment: verifyComment,
+                status:
+                    addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS'
+                        ? 'Done'
+                        : addressVerificationSuc?.data.data
+                              .verificationStatus === 'FAILED'
+                        ? 'Failed'
+                        : pending
             },
 
             {
@@ -1392,11 +1407,14 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
                 name: 'Verify',
-                comment: null,
+                comment: verifyComment,
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
                         ? 'Done'
+                        : addressVerificationSuc?.data.data
+                              .verificationStatus === 'FAILED'
+                        ? 'Failed'
                         : pending
             },
             {
