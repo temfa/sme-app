@@ -1681,9 +1681,9 @@ export const cardLoginData = (data) => (dispatch) => {
     dispatch(cardLoginLoadStart());
     axiosInstance
         .post(`${apiRoutes.cardLogin}`, data)
-        .then((response) => dispatch(cardLoginLoadSuccess(response.data)))
+        .then((response) => dispatch(cardLoginLoadSuccess(response?.data)))
         .catch((error) =>
-            dispatch(cardLoginLoadError(error?.response.data.message))
+            dispatch(cardLoginLoadError(error?.response?.data?.message))
         );
 };
 
@@ -2795,7 +2795,7 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+                Authorization: `Bearer ${data?.token}`
             }
         })
         .then((response) => {

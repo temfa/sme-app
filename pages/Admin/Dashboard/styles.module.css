@@ -177,11 +177,11 @@
 .success p {
     color: #6ccf00 !important;
 }
-.success{
+.success {
     color: #69940d;
     cursor: pointer;
 }
-.nothing{
+.nothing {
     cursor: pointer;
 }
 
@@ -498,7 +498,7 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-.sliderImage{
+.sliderImage {
     margin-right: 40px;
 }
 
@@ -843,6 +843,11 @@
 @media screen and (max-width: 1163px) {
     .name {
         font-size: 10px;
+    }
+    .transactionStatus {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
     }
 }
 
