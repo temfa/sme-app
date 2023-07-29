@@ -3761,7 +3761,7 @@ const AccountUpgrade = () => {
                                     <label>Transaction Pin</label>
                                     <div className={styles.divs}>
                                         <input
-                                            type={outType ? 'text' : 'password'}
+                                            type={outType ? 'password' : 'text'}
                                             name="transactionPin"
                                             {...register('transactionPin', {
                                                 required:
@@ -3796,7 +3796,7 @@ const AccountUpgrade = () => {
                                     <div className={styles.divs}>
                                         <input
                                             type={
-                                                outTyped ? 'text' : 'password'
+                                                outTyped ? 'password' : 'text'
                                             }
                                             name="password"
                                             {...register('password', {

@@ -11,8 +11,8 @@ import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
 import { loadUserProfile } from '../../../../redux/actions/actions';
 const videoConstraints = {
-    width: 390,
-    height: 480,
+    width: 268,
+    height: 268,
     facingMode: 'user'
 };
 const _base64ToArrayBuffer = (base64String) => {
@@ -102,12 +102,16 @@ const Liveness = ({ action, cookie }) => {
                                     : styles.imageInner
                             }
                         >
-                            <Webcam
-                                audio={false}
-                                screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
-                                ref={webcamRef}
-                            />
+                            <div>
+                                <Webcam
+                                    // height={268}
+                                    // width={268}
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    // videoConstraints={videoConstraints}
+                                    ref={webcamRef}
+                                />
+                            </div>
                         </div>
                     </div>
                     {loading ? (

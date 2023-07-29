@@ -37,13 +37,13 @@
     text-align: center;
     color: #005b82;
 }
-.succCov{
+.succCov {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-.succCovInn{
+.succCovInn {
     width: 400px;
     border-radius: 12px;
 }
@@ -60,9 +60,6 @@
     max-width: 248px;
     margin: 16px auto;
 }
-
-
-
 
 .cover {
     /* height: 100vh; */

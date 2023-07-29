@@ -55,7 +55,7 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
                         <input
                             placeholder="******"
                             required
-                            type={outType ? 'text' : 'password'}
+                            type={outType ? 'password' : 'text'}
                             onChange={handlePwd}
                         />
                         <Visbility
@@ -76,7 +76,7 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
                         <input
                             placeholder="******"
                             required
-                            type={outType ? 'text' : 'password'}
+                            type={outType ? 'password' : 'text'}
                             onChange={handlePaswword}
                         />
                         <Visbility typeSet={types} input="input" />
@@ -91,7 +91,7 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
                         <input
                             placeholder="******"
                             required
-                            type={outType ? 'text' : 'password'}
+                            type={outType ? 'password' : 'text'}
                             onChange={handlePin}
                         />
                         <Visbility typeSet={types} input="input" />
