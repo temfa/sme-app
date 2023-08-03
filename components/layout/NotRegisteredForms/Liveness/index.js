@@ -11,8 +11,8 @@ import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
 import { loadUserProfile } from '../../../../redux/actions/actions';
 const videoConstraints = {
-    width: 268,
-    height: 268,
+    width: 390,
+    height: 480,
     facingMode: 'user'
 };
 const _base64ToArrayBuffer = (base64String) => {
@@ -61,7 +61,7 @@ const Liveness = ({ action, cookie }) => {
         }
 
         axios
-            .post(`https://testvate.live/authentication/facematch`, formData, {
+            .post(`http://178.128.174.252/authentication/facematch`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'X-Client-Type': 'web',
@@ -102,16 +102,12 @@ const Liveness = ({ action, cookie }) => {
                                     : styles.imageInner
                             }
                         >
-                            <div>
-                                <Webcam
-                                    // height={268}
-                                    // width={268}
-                                    audio={false}
-                                    screenshotFormat="image/jpeg"
-                                    // videoConstraints={videoConstraints}
-                                    ref={webcamRef}
-                                />
-                            </div>
+                            <Webcam
+                                audio={false}
+                                screenshotFormat="image/jpeg"
+                                videoConstraints={videoConstraints}
+                                ref={webcamRef}
+                            />
                         </div>
                     </div>
                     {loading ? (
