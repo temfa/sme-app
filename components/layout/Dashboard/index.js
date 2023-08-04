@@ -44,7 +44,11 @@ import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 import Idle from 'react-idle';
 import { useRouter } from 'next/router';
-import { logoutAction } from '../../../redux/actions/actions';
+import {
+    logoutAction,
+    loadUserProfile,
+    getProfileImgAction
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import withAuth from '../../HOC/withAuth';
 const DashLayout = ({
@@ -57,6 +61,27 @@ const DashLayout = ({
     productAction
 }) => {
     const [sideActive, setSideActive] = useState(false);
+    const [profileImg, setProfileImg] = useState('');
+    const [userProfileData, setUserProfileData] = useState([]);
+    const dispatch = useDispatch();
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const { getProfileImg } = useSelector(
+        (state) => state.getProfileImgReducer
+    );
+    useEffect(() => {
+        dispatch(loadUserProfile());
+        dispatch(getProfileImgAction());
+    }, []);
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
+    useEffect(() => {
+        if (getProfileImg !== null) {
+            setProfileImg(getProfileImg);
+        }
+    }, [getProfileImg]);
     const router = useRouter();
     return (
         <>
@@ -84,17 +109,21 @@ const DashLayout = ({
 
                     {!sideActive ? (
                         <div className={styles.dashCont}>
-                            <Navbar
-                                page={page}
-                                text={text}
-                                action={action}
-                                preview={preview}
-                                previewSingle={previewSingle}
-                                productAction={productAction}
-                                sideAction={() => {
-                                    setSideActive(true);
-                                }}
-                            />
+                            {page === 'Create Storefront' ? null : (
+                                <Navbar
+                                    page={page}
+                                    text={text}
+                                    action={action}
+                                    preview={preview}
+                                    previewSingle={previewSingle}
+                                    productAction={productAction}
+                                    sideAction={() => {
+                                        setSideActive(true);
+                                    }}
+                                    profileImg={profileImg}
+                                    userProfile={userProfileData}
+                                />
+                            )}
                             {children}
                         </div>
                     ) : null}
