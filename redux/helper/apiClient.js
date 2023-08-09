@@ -12,8 +12,8 @@ if (loginToken === null) {
 }
 
 const axiosInstance = axios.create({
-    baseURL: 'http://178.128.174.252'
-    // baseURL: '//http://178.128.174.252> /'
+    baseURL: 'https://testvate.live'
+    // baseURL: '//https://testvate.live> /'
 });
 
 export default axiosInstance;

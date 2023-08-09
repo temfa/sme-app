@@ -927,7 +927,13 @@ const Dashboard = () => {
                                                             <p>
                                                                 {newBeneficiary ===
                                                                 ''
-                                                                    ? ''
+                                                                    ? item.transactionType.replace(
+                                                                          '_',
+                                                                          ' '
+                                                                      ) ===
+                                                                      'BILL PAYMENT'
+                                                                        ? item.billerCode
+                                                                        : ''
                                                                     : newBeneficiary[1] ===
                                                                       undefined
                                                                     ? newBeneficiary[0]

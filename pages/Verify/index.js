@@ -25,7 +25,7 @@ const Verify = () => {
         if (token) {
             axios
                 .get(
-                    `http://178.128.174.252/authentication/email-verification/${token}`,
+                    `https://testvate.live/authentication/email-verification/${token}`,
                     {
                         headers: {
                             'X-Client-Type': 'web'

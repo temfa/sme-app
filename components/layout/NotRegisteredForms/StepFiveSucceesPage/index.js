@@ -14,7 +14,7 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     useEffect(() => {
         const cookie = getCookie('cookieToken');
         axiosInstance
-            .get(`http://178.128.174.252${apiRoutes.accountStatus}`, {
+            .get(`https://testvate.live${apiRoutes.accountStatus}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookie}`

@@ -112,7 +112,7 @@ const CorporateAccount = () => {
         }
         axiosInstance
             .post(
-                `http://178.128.174.252${apiRoutes.corpNewUser}`,
+                `https://testvate.live${apiRoutes.corpNewUser}`,
 
                 accountData,
                 {
@@ -127,7 +127,7 @@ const CorporateAccount = () => {
                 //console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
                     axiosInstance
-                        .get(`http://178.128.174.252/bank-account/status`, {
+                        .get(`https://testvate.live/bank-account/status`, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-Client-Type': 'web',
@@ -155,7 +155,7 @@ const CorporateAccount = () => {
                     error
                 ) {
                     axiosInstance
-                        .get(`http://178.128.174.252/bank-account/status`, {
+                        .get(`https://testvate.live/bank-account/status`, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'X-Client-Type': 'web',
