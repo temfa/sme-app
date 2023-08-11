@@ -9,7 +9,6 @@ import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
-import { loadUserProfile } from '../../../../redux/actions/actions';
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -61,7 +60,7 @@ const Liveness = ({ action, cookie }) => {
         }
 
         axios
-            .post(`https://testvate.live/authentication/facematch`, formData, {
+            .post(`http://178.128.174.252/authentication/facematch`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'X-Client-Type': 'web',
@@ -115,19 +114,17 @@ const Liveness = ({ action, cookie }) => {
                     ) : null}
                     <ButtonComp
                         onClick={
-                            // succes === 'facial verification successful'
-                            // ?
-                            action
-                            // : capture
+                            succes === 'facial verification successful'
+                                ? action
+                                : capture
                         }
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
                         type="button"
                         text={
-                            // succes === 'facial verification successful'
-                            // ?
-                            'Continue'
-                            // : 'Snap'
+                            succes === 'facial verification successful'
+                                ? 'Continue'
+                                : 'Snap'
                         }
                         err={succes}
                         loads={loads}

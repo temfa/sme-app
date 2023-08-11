@@ -14,16 +14,16 @@
     color: white;
     padding: 11px;
 }
-.setAccountNumberAsPrimary {
+.setAccountNumberAsPrimary{
     display: flex;
     gap: 18px;
     align-items: center;
 }
-.success {
+.success{
     color: #69940d;
     cursor: pointer;
 }
-.nothing {
+.nothing{
     cursor: pointer;
 }
 .cardRight {
@@ -167,22 +167,22 @@
     top: 30%;
 }
 @media screen and (max-width: 975px) {
-    .moneybodyDiv {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        width: 80%;
-    }
-    .sliderImage {
-        margin-top: 20px;
-        display: none;
-        justify-content: center;
-    }
-    .bagMoney {
-        position: absolute;
-        right: 5%;
-        top: 30%;
-        display: none;
-    }
+.moneybodyDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+.sliderImage {
+    margin-top: 20px;
+    display: none;
+    justify-content: center;
+}
+.bagMoney{
+    position: absolute;
+    right: 5%;
+    top: 30%;
+    display: none;
+}
 }

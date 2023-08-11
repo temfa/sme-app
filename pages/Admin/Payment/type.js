@@ -1,35 +1,23 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DashLayout from '../../../components/layout/Dashboard';
 import MakePaymentFirst from '../../../components/ReusableComponents/MakePaymentFirst';
 import MakePaymentSecond from '../../../components/ReusableComponents/MakePaymentSecond';
 import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
 import styles from './styles.module.css';
-import Image from 'next/image';
-import Overlay from '../../../components/ReusableComponents/Overlay';
 import SchedulePayment from '../../../components/ReusableComponents/Schedulepayment';
-import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import { RWebShare } from 'react-web-share';
-import {
-    postAirtime,
-    postInterBank,
-    getTransactionFees,
-    postBills,
-    getBalanceEnquiry,
-    getBulkTransfer,
-    loadUserProfile,
-    postBeneficiariesData,
-    loadAccountPrimary,
-    bankAccountsData
-} from '../../../redux/actions/actions';
-// import ChartDiv from './chartDivStyled';
-// import ChartContent from './chartContentStyled';
 import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
 import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../../components/ReusableComponents/Data';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
+import { getTransactionFees } from '../../../redux/actions/transactionFeesAction';
+import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
+import { postInterBank } from '../../../redux/actions/interBankTransferAction';
+import { getBulkTransfer } from '../../../redux/actions/bulkTransferAction';
+import { postAirtime } from '../../../redux/actions/airtimeAction';
+import { postBills } from '../../../redux/actions/billsAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
 
 const PaymentTypes = () => {
     const router = useRouter();
@@ -37,17 +25,11 @@ const PaymentTypes = () => {
     const { airtime, errorMessageAirtime } = useSelector(
         (state) => state.airtimeReducer
     );
-    const { accountPrimarys, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
     const { bills, errorMessageBills } = useSelector(
         (state) => state.billsReducer
     );
     const { interBank, errorMessageInterBank } = useSelector(
         (state) => state.interBankReducer
-    );
-    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
-        (state) => state.balanceEnquiryReducer
     );
     const { bulkTransfer, errorMessagebulkTransfer } = useSelector(
         (state) => state.bulkTransferReducer
@@ -56,30 +38,20 @@ const PaymentTypes = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
-
-    const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
-        (state) => state.verifyCurrencyReducer
-    );
-
-    const { postBeneficiaries } = useSelector(
-        (state) => state.postBeneficiariesReducer
-    );
     const { userProfile } = useSelector((state) => state.userProfileReducer);
-    const { bankAccounts, bankAccountErrorMessages } = useSelector(
-        (state) => state.bankAccountsReducer
-    );
+
+    // const { internationalTransfer, errorMessageinternationalTransfer } =
+    //     useSelector((state) => state.internationalTransferReducer);
 
     const dispatch = useDispatch();
-    const [acctNum, setAcctNumm] = useState('');
+    // const [acctNum, setAcctNumm] = useState('');
     const [formType, setFormType] = useState('');
     const [formData, setFormdata] = useState({ accountNum: '' });
     const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [count, setCount] = useState(0);
-    const [active, setActive] = useState(true);
+    // const [active, setActive] = useState(true);
     const [outType, setOutType] = useState();
     const [transactionFee, setTransactionFee] = useState(0);
     const [paymentDetails, setPaymentDetails] = useState({});
@@ -94,8 +66,11 @@ const PaymentTypes = () => {
     const [userProfileData, setUserProfileData] = useState({});
     const [successfulTrans, setSuccessfulTrans] = useState([]);
     const [failedTrans, setFailedTrans] = useState([]);
-    const [acctNummber, setAcctNumber] = useState('');
-    const [errorQr, setErrorQr] = useState('');
+    // const [acctNummber, setAcctNumber] = useState('');
+
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
 
     let airtimeData;
     let airtimeNetData = {};
@@ -124,7 +99,7 @@ const PaymentTypes = () => {
     //     if (items) {
     //         setCsvData(items);
 
-    //         console.log(items);
+    //          //console.log(items);
     //     } else {
     //         // alert('Hello');
     //     }
@@ -139,63 +114,11 @@ const PaymentTypes = () => {
         number = window.localStorage.getItem('number');
         numberofBene = JSON.parse(number);
     }
-    useEffect(() => {
-        dispatch(bankAccountsData());
-        dispatch(loadAccountPrimary());
-        dispatch(loadUserProfile());
-    }, []);
-    useEffect(() => {
-        console.log(accountPrimarys);
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-    }, [userProfile]);
-    useEffect(() => {
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === acctNum) {
-                setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-    }, [acctNum]);
-    useEffect(() => {
-        if (balanceEnquiry !== null) {
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'NGN',
-                currencyDisplay: 'narrowSymbol'
-            });
-            const formattedAmount = formatter.format(
-                balanceEnquiry.availableBalance
-            );
-            setBalance(formattedAmount);
-        }
-    }, [balanceEnquiry]);
+
     //where i need to work on
-    useEffect(() => {
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
-                // setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                // console.log(senderDetails.accountId);
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-    }, [formData.accountNum]);
     const interBankCheck = () => {
         if (interBank !== null) {
-            //console.loginterBank);
+            // //console.loginterBank);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -211,7 +134,7 @@ const PaymentTypes = () => {
     }, [interBank, errorMessageInterBank]);
     const billsCheck = () => {
         if (bills !== null) {
-            //console.logbills);
+            // //console.logbills);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -243,7 +166,7 @@ const PaymentTypes = () => {
     }, [transactionFees, errorMessageTransactionFees]);
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
-            //console.log(bulkTransfer);
+            // //console.log(bulkTransfer);
             if (bulkTransfer.failedTranscations.length !== 0) {
                 setCount((count) => count + 1);
                 setIsLoading(false);
@@ -270,18 +193,24 @@ const PaymentTypes = () => {
     }, [bulkTransfer, errorMessagebulkTransfer]);
     const airtimeCheck = () => {
         if (airtime !== null) {
-            //console.logairtime);
+            // //console.logairtime);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
         } else if (errorMessageAirtime !== null) {
-            //console.logerrorMessageAirtime);
+            // //console.logerrorMessageAirtime);
             setCount((count) => count + 1);
             setIsLoading(false);
             setError(errorMessageAirtime);
             setStatus('error');
         }
     };
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
     useEffect(() => {
         airtimeCheck();
     }, [airtime, errorMessageAirtime]);
@@ -321,7 +250,7 @@ const PaymentTypes = () => {
     }, [link]);
     const handleFormChange = (formTitle) => {
         if (userProfileData.hasSetTransactionPin === false) {
-            console.log(userProfileData.createdFromEcobankCred);
+            //console.log(userProfileData.createdFromEcobankCred);
             if (userProfileData.createdFromEcobankCred === false) {
                 router.push({
                     pathname: '/AccountUpgrade',
@@ -333,6 +262,7 @@ const PaymentTypes = () => {
                     query: { id: 'Transaction Pin' }
                 });
             }
+            console.log('Test');
         } else if (userProfileData.hasSetTransactionPin === true) {
             setFormType(formTitle);
             setOverlay(true);
@@ -345,7 +275,6 @@ const PaymentTypes = () => {
         setIsLoading(false);
         setPaymentDetails({});
         setError([]);
-        setErrorQr([]);
     };
 
     const buttonHandleClose = () => {
@@ -354,7 +283,6 @@ const PaymentTypes = () => {
         setCount(0);
         setPaymentDetails({});
         setError([]);
-        setErrorQr([]);
     };
 
     useEffect(() => {
@@ -380,9 +308,9 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Next"
                                 othersaction={(data) => {
-                                    console.log(data);
+                                    //console.log(data);
                                     setSenderDetails(data.sourceAccount);
-                                    console.log(senderDetails);
+                                    //console.log(senderDetails);
                                     if (data.bankName === 'ECOBANK') {
                                         setEcobank(true);
                                         setCount(count + 1);
@@ -575,7 +503,7 @@ const PaymentTypes = () => {
                                 action={(data) => {
                                     setPaymentDetails(data);
                                     setSenderDetails(data.sourceAccount);
-                                    //console.log(data);
+                                    // //console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -816,6 +744,9 @@ const PaymentTypes = () => {
                     case 1:
                         return (
                             <MakePaymentFirst
+                                backAction={() => {
+                                    setCount(count - 1);
+                                }}
                                 formData={formData}
                                 setFormdata={setFormdata}
                                 overlay={overlay}
@@ -830,18 +761,23 @@ const PaymentTypes = () => {
                                 airtimeAction={(data) => {
                                     setPaymentDetails(data);
                                     setSenderDetails(data.sourceAccount);
-                                    const payload = {
-                                        accountId: data.sourceAccount,
-                                        billerCode: data.type,
-                                        transactionAmount: parseInt(
-                                            data.amount,
-                                            10
-                                        ),
-                                        transactionType: 'BILLPAY'
-                                    };
-                                    dispatch(getTransactionFees(payload));
-                                    setIsLoading(true);
-                                    //console.logdata);
+                                    if (bill === 'DATA') {
+                                        setCount((count) => count + 1);
+                                    } else {
+                                        const payload = {
+                                            accountId: data.sourceAccount,
+                                            billerCode: data.type,
+                                            transactionAmount: parseInt(
+                                                data.amount,
+                                                10
+                                            ),
+                                            transactionType: 'BILLPAY'
+                                        };
+                                        dispatch(getTransactionFees(payload));
+                                        setIsLoading(true);
+                                    }
+
+                                    // //console.logdata);
                                 }}
                                 // scheduleLater={() => {
                                 //     setCount(count + 3);
@@ -860,11 +796,20 @@ const PaymentTypes = () => {
                                         ? paymentDetails.phoneNumber === ''
                                             ? paymentDetails.phoneNumberBene
                                             : paymentDetails.phoneNumber
+                                        : bill === 'DATA'
+                                        ? paymentDetails.phoneNumber
                                         : 'UTILITIES'
                                 }
                                 amount={
-                                    parseInt(paymentDetails.amount, 10) +
-                                    parseInt(transactionFee, 10)
+                                    bill === 'DATA'
+                                        ? parseInt(
+                                              paymentDetails.dataType.split(
+                                                  'N'
+                                              )[1],
+                                              10
+                                          )
+                                        : parseInt(paymentDetails.amount, 10) +
+                                          parseInt(transactionFee, 10)
                                 }
                                 title="Bills Payment"
                                 charges={transactionFee}
@@ -919,7 +864,11 @@ const PaymentTypes = () => {
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             transactionAmount:
-                                                paymentDetails.amount,
+                                                bill === 'DATA'
+                                                    ? paymentDetails.dataType.split(
+                                                          'N'
+                                                      )[1]
+                                                    : paymentDetails.amount,
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
@@ -1013,7 +962,7 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -1032,7 +981,7 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 secondAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -1048,7 +997,7 @@ const PaymentTypes = () => {
                                 overlay={overlay}
                                 closeAction={handleClose}
                                 transferAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />
@@ -1118,7 +1067,7 @@ const PaymentTypes = () => {
             )} */}
             <div className={styles.allTypes}>
                 <div className={styles.cov}>
-                    <AccountsInfoCard />
+                    <AccountsInfoCard userProfileData={userProfileData} />
                     {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>

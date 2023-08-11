@@ -59,10 +59,3 @@
     max-width: 248px;
     margin: 16px auto;
 }
-
-@media screen and (max-width: 600px) {
-    .cover {
-        width: 90%;
-        max-width: 100%;
-    }
-}

@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import axiosInstance from '../../../redux/helper/apiClient';
 import apiRoutes from '../../../redux/helper/apiRoutes';
-import { logoutAction } from '../../../redux/actions/actions';
+import { logoutAction } from '../../../redux/actions/logOutAction';
+import { newAccountStatusData } from '../../../redux/actions/newAccountStatusAction';
 
 const CorporateAccount = () => {
     const [accountInfo, setAccountInfo] = useState('');
@@ -124,7 +125,7 @@ const CorporateAccount = () => {
                 }
             )
             .then((response) => {
-                //console.log'create New Account', response.data);
+                // //console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
                     axiosInstance
                         .get(`https://testvate.live/bank-account/status`, {
@@ -135,16 +136,16 @@ const CorporateAccount = () => {
                             }
                         })
                         .then((response) => {
-                            //console.log'Accoutn Status', response);
+                            // //console.log'Accoutn Status', response);
                             setAccountDone(response.data.message);
                         })
                         .catch((error) => {
-                            //console.logerror.response.data.message);
+                            // //console.logerror.response.data.message);
                         });
                 }
             })
             .catch((error) => {
-                //console.log
+                // //console.log
                 // 'create new account Error:',
                 // error.response.data.message
                 // );
@@ -163,19 +164,19 @@ const CorporateAccount = () => {
                             }
                         })
                         .then((response) => {
-                            //console.log'Accoutn Status', response);
+                            // //console.log'Accoutn Status', response);
                             setAccountDone(response.data.message);
                         })
                         .catch((error) => {
-                            //console.logerror.response.data.message);
+                            // //console.logerror.response.data.message);
                         });
                 }
             });
     };
-    //console.log(accountDone);
+    // //console.log(accountDone);
     useEffect(() => {
         if (accountDone === 'success') {
-            router.push('/Succes/CorpSuccess');
+            router.push('/Success/CorpSuccess');
         }
     }, [errorMes, accountDone]);
     useEffect(() => {
@@ -192,8 +193,8 @@ const CorporateAccount = () => {
         }
 
         if (accountDone.message === 'success') {
-            //console.logaccountStatus.messages, errorMessages);
-            router.push('/Succes');
+            // //console.logaccountStatus.messages, errorMessages);
+            router.push('/Success');
         }
 
         if (timer === '00:00:00') {

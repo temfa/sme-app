@@ -6,7 +6,7 @@ import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { bankAccountsData } from '../../../redux/actions/actions';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
 
 const StepThree = ({
     action,
@@ -18,8 +18,9 @@ const StepThree = ({
     const dispatch = useDispatch();
     const [profileInfo, setProfileInfo] = useState([]);
     const account = localStorage.getItem('account');
+
     const accountDetails = JSON.parse(account);
-    console.log(accountDetails);
+    //  //console.log(accountDetails);
 
     useEffect(() => {
         const account = localStorage.getItem('account');
@@ -34,6 +35,13 @@ const StepThree = ({
     }, []);
 
     const [isRegistered, setIsRegistered] = useState(false);
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        if (countryNames) {
+            setActive(true);
+        }
+    }, [countryNames]);
 
     const [progress, setProgress] = useState('50%');
     const [bgcolor, setBgcolor] = useState(false);
@@ -150,7 +158,11 @@ const StepThree = ({
                                 </select>
                             </div>
                         </div>
-                        <button onClick={handleSubmitNew}>
+                        <button
+                            disabled={active ? false : true}
+                            className={active ? null : styles.disabled}
+                            onClick={handleSubmitNew}
+                        >
                             Click to use this Account
                         </button>
                         <p onClick={handleSubmit} className={styles.open}>

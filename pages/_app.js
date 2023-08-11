@@ -23,9 +23,8 @@ const LoadingScreen = () => {
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
     useEffect(() => {
-        const handleStart = (url) => (
-            url !== router.asPath && setLoaded(true), console.log('started')
-        );
+        const handleStart = (url) => url !== router.asPath && setLoaded(true);
+
         const handleComplete = (url) =>
             url === router.asPath && setLoaded(false);
 
@@ -85,7 +84,13 @@ function MyApp({ Component, pageProps, router }) {
         // <Layout>
         <>
             <Provider store={store}>
-                <DashLayout>
+                <DashLayout
+                    page={
+                        router.asPath === '/Admin/CreateStorefront'
+                            ? 'Create Storefront'
+                            : null
+                    }
+                >
                     {/* <AnimatePresence exitBeforeEnter>
                         <motion.div
                             key={router.route}

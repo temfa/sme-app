@@ -4,8 +4,8 @@ import OtpInput from '../../ReusableComponents/Otpinput';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { ResetOTP } from '../NotRegisteredForms/StepTwoBVNAuthenticator/styles.module';
 import styles from './styles.module.css';
-import { resetOtpData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { resetOtpData } from '../../../redux/actions/resetOtpAction';
 const FirstStep = ({
     handleSubmit,
     action,
@@ -35,7 +35,7 @@ const FirstStep = ({
                 );
                 setValue((prevValue) => [...prevValue, value]);
 
-                console.log(ssnValues);
+                //  //console.log(ssnValues);
 
                 // If found, focus the next field
                 if (nextSibling !== null) {
@@ -50,8 +50,8 @@ const FirstStep = ({
         let accounts = window.localStorage.getItem('account');
         var newAccounts = JSON.parse(accounts);
         let loginWith = localStorage.getItem('LoginWith');
-        //console.log(loginWith);
-        //console.log(newAccounts.user.email);
+        // //console.log(loginWith);
+        // //console.log(newAccounts.user.email);
     }
     const userId = () => {
         if (newAccounts.userId != undefined) {
@@ -61,18 +61,16 @@ const FirstStep = ({
         }
     };
     useEffect(() => {
-        if (ssnValues.length !== 1) {
+        if (ssnValues.length == 6) {
             setFormData({ ...formData, otp: ssnValues.join('') });
         }
     }, [ssnValues]);
     const ResetOtp = (e) => {
         setValue((ssnValues) => ['']);
-        // document.querySelector();
         const data = {
             userId: userId()
         };
         dispatch(resetOtpData(data));
-        //console.logresetOtp, resetOtpErrorMessages);
     };
     const clear = () => {
         setValue((ssnValues) => ['']);
